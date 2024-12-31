@@ -1,0 +1,123 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+nav {
+    background-color: #170F11;
+    box-shadow: 3px 3px 5px black;
+  }
+  nav ul {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #170F11;
+  }
+  nav li {
+    height: 50px;
+  }
+  nav a {
+    height: 100%;
+    padding: 0 15px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color:white;
+  }
+  nav a:hover {
+    background-color: #2d1e22;
+  }
+  nav li:first-child {
+    margin-right: auto;
+  }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 999;
+    background-color: grey;
+    backdrop-filter: blur(90%);
+    box-shadow: -10px 0 10px black;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .sidebar li {
+    width: 100%;
+  }
+  .sidebar a {
+    width: 100%;
+  }
+  .menu-button {
+    display: none;
+  }
+  @media (max-width: 800px) {
+    .hideOnMobile {
+      display: none;
+    }
+    .menu-button {
+      display: block;
+    }
+    .meme {
+      width: 90%;
+    }
+  }
+  @media (max-width: 400px) {
+    .sidebar {
+      width: 100%;
+    }
+    .meme {
+      width: 100%;
+    }
+  }
+  .nav {
+    width: 5%;
+    background-color: grey;
+  }
+  .nav .ul .li {
+    position: relative;
+  }
+  .nav .ul {
+    width: 150%;
+    box-shadow: 3px 3px 5px black;
+  }
+  .nav .ul .li .link {
+    display: block;
+    color: white;
+    font-size: 14px;
+    height: 50%;
+    width: 60%;
+    padding-top: 14px;
+    text-decoration: none;
+  }
+  
+  .nav .ul .li .link:hover {
+    background-color: #2d1e22;
+  }
+  
+  .nav .ul .li .ul {
+    display: none;
+    position: absolute;
+    background-color: #170F11;
+    border-radius: 0px 0px 4px 4px;
+  }
+  
+  .nav .ul .li:hover .ul {
+    display: block;
+  }
+  
+  .nav .ul .li .ul .li .link {
+    padding: 8px 14px;
+  }
+  
+  .nav .ul .li .ul .li {
+    border-radius: 4px;
+  }
+  
+  .nav .ul .li .ul .li .link:hover {
+    background-color: #2d1e22;
+  }

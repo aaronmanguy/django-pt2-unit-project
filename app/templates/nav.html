@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static "styles.css" %}">
+    <script src="{% static "static.js" %}" defer></script>
+    <title>Home</title>
+  </head>
+  <nav>
+    <ul class="sidebar">
+      <li onclick="hideSidebar()">
+        <a href="#"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#e8eaed"
+          >
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+            /></svg
+        ></a>
+      </li>
+      <li>
+        <a href="/"><img src="{% static "images/home.svg" %}" /></a>
+      </li>
+      <li><a href="/create-post">Placeholder 1</a></li>
+      <li><a href="/profile">Placeholder 2</a></li>
+      {%if request.user.is_staff%}
+      <li><a href="/all-users">Placeholder 3</a></li>
+      {%endif%}
+    </ul>
+    <ul>
+      <li class="hideOnMobile">
+        <a href="/"><img src="{% static "images/home.svg" %}" style="margin-right:10%"/>{{request.user.Placeholder 2.name}}</a>
+      </li>
+      <li class="hideOnMobile"><a href="/create-post">Placeholder 1</a></li>
+      {%if request.user.is_staff%}
+      <li class="hideOnMobile"><a href="/all-users">Placeholder 3</a></li>
+      {%endif%}
+      <li class="hideOnMobile"><a href="/profile"><img src="{{request.user.profile.img.url}}" class="nav-profile-img" /></a></li>
+      <li class="menu-button" onclick="showSidebar()">
+        <a href="#"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#e8eaed"
+          >
+            <path
+              d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
+            /></svg
+        ></a>
+      </li>
+    </ul>
+  </nav>
+  <body>
+    {%block content%}
+
+    {%endblock%}
+  </body>
+</html>

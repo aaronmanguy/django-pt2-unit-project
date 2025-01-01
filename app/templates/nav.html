@@ -27,21 +27,21 @@
       <li>
         <a href="/"><img src="{% static "images/home.svg" %}" /></a>
       </li>
-      <li><a href="/create-post">Placeholder 1</a></li>
+      <li><a href="/create-product">Create Product</a></li>
       <li><a href="/profile">Placeholder 2</a></li>
-      {%if request.user.is_staff%}
+      {% comment %} {%if request.user.is_staff%}
       <li><a href="/all-users">Placeholder 3</a></li>
-      {%endif%}
+      {%endif%} {% endcomment %}
     </ul>
     <ul>
       <li class="hideOnMobile">
-        <a href="/"><img src="{% static "images/home.svg" %}" style="margin-right:10%"/>{{request.user.Placeholder 2.name}}</a>
+        <a href="/"><img src="{% static "images/home.svg" %}" style="margin-right:10%"/>{%comment%}{{request.user.Placeholder 2.name}}{%endcomment%}</a>
       </li>
-      <li class="hideOnMobile"><a href="/create-post">Placeholder 1</a></li>
-      {%if request.user.is_staff%}
+      <li class="hideOnMobile"><a href="/create-product">Create Product</a></li>
+      {% comment %} {%if request.user.is_staff%}
       <li class="hideOnMobile"><a href="/all-users">Placeholder 3</a></li>
-      {%endif%}
-      <li class="hideOnMobile"><a href="/profile"><img src="{{request.user.profile.img.url}}" class="nav-profile-img" /></a></li>
+      {%endif%} {% endcomment %}
+      <li class="hideOnMobile"><a href="/profile"><img src="{%comment%}{{request.user.profile.img.url}}{%endcomment%}" class="nav-profile-img" /></a></li>
       <li class="menu-button" onclick="showSidebar()">
         <a href="#"
           ><svg

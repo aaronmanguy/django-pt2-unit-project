@@ -1,0 +1,13 @@
+{%extends 'nav.html'%}{%block content%}
+
+<h1>BOOGER</h1>
+
+{%for product in products%}
+<div class="product">
+  <div class="product-creation-info">
+    <img src="{{product.img.url}}" class="product-img" />
+    <p>{{product.name}}</p>
+    <p class="product-text">{{product.desc}}</p>
+  </div>
+  {%endfor%} {%endblock%}
+</div>

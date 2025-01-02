@@ -13,9 +13,9 @@ class CreateProduct(ModelForm):
         model = Product
         fields = '__all__'
 
-# class ProfileForm(ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = '__all__'
-#         exclude = ['user', 'posts']
+class SellerProfile(ModelForm):
+    class Meta:
+        model = Seller
+        fields = '__all__'
+        exclude = ['user', 'products']
     

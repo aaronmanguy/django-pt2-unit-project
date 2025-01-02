@@ -1,13 +1,18 @@
 {%extends 'nav.html'%}{%block content%}
+{%load static%}
+<h1 class="page-title">All Items</h1>
 
-<h1>BOOGER</h1>
-
-{%for product in products%}
-<div class="product">
-  <div class="product-creation-info">
-    <img src="{{product.img.url}}" class="product-img" />
-    <p>{{product.name}}</p>
-    <p class="product-text">{{product.desc}}</p>
+<div class="products-hold">
+  <div class="all-products">
+    {%for product in products%}
+    <div class="product">
+      <div class="product-creation-info">
+        <a href="{% url 'view-product' product.id%}"><img src="{{product.img.url}}" class="product-img"/></a>
+      </div>
+      <p class="product-name">{{product.name}}</p>
+      <p class="product-text">{{product.desc}}</p>
+    </div>
+    {%endfor%}
   </div>
-  {%endfor%} {%endblock%}
 </div>
+{%endblock%}

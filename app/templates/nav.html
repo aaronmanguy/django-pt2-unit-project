@@ -27,21 +27,27 @@
       <li>
         <a href="/"><img src="{% static "images/home.svg" %}" /></a>
       </li>
-      <li><a href="/create-product">Create Product</a></li>
-      <li><a href="/profile">Placeholder 2</a></li>
+      {%if request.user.is_authenticated%}
+        <li><a href="/create-product">Create Product</a></li>
+      {%else%}
+        <li><a href="/login">Login</a></li>
+      {%endif%}
+      {%if request.user.is_authenticated%}
+      <li><a href="/login">Login</a></li>
+      {%endif%}
+      <li><a href="/profile">Profile</a></li>
       {% comment %} {%if request.user.is_staff%}
       <li><a href="/all-users">Placeholder 3</a></li>
       {%endif%} {% endcomment %}
     </ul>
     <ul>
       <li class="hideOnMobile">
-        <a href="/"><img src="{% static "images/home.svg" %}" style="margin-right:10%"/>{%comment%}{{request.user.Placeholder 2.name}}{%endcomment%}</a>
+        <a href="/"><img src="{% static "images/home.svg" %}" style="margin-right:10%"/></a>
       </li>
-      <li class="hideOnMobile"><a href="/create-product">Create Product</a></li>
-      {% comment %} {%if request.user.is_staff%}
-      <li class="hideOnMobile"><a href="/all-users">Placeholder 3</a></li>
-      {%endif%} {% endcomment %}
-      <li class="hideOnMobile"><a href="/profile"><img src="{%comment%}{{request.user.profile.img.url}}{%endcomment%}" class="nav-profile-img" /></a></li>
+        {%if request.user.is_authenticated%}
+        <li class="hideOnMobile"><a href="/create-product">Create Product</a></li>
+      <li class="hideOnMobile"><a href="{% url 'profile' user.id%}"><img src="{{request.user.seller.img.url}}" class="nav-seller-img" /></a></li>
+      {%endif%}
       <li class="menu-button" onclick="showSidebar()">
         <a href="#"
           ><svg

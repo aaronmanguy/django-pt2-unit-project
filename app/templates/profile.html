@@ -1,0 +1,67 @@
+{%extends 'nav.html'%} {%block content%}
+<div class="row">
+  <div class="col-md">
+      <nav class="nav">
+      <ul class="ul">
+      <li class="li">
+        <a class="link" href="#">...</a>
+        <ul class="ul">
+          <li class="li">
+            <a
+              class="link"
+              href="/edit-profile"
+              >Edit Profile</a
+            >
+          </li>
+          <li class="li">
+            <a
+              class="link"
+              href="{% url 'logout'%}"
+              >Logout</a
+            >
+          </li>
+          {% comment %} <li class="li">
+            <a
+              class="link"
+              href="{% url 'self-user-delete' user.id %}"
+              >Delete Profile</a
+            >
+          </li> {% endcomment %}
+        </ul>
+      </ul>
+      </li>
+    </nav>
+      <div class="profile-hold">
+        <div class="profile-cluster">
+          <div class="profile-pic-holder">
+            <img class="profile-pic" src="{{seller.img.url}}" />
+          </div>
+          <p class="profile-name">{{seller.name}}</p>
+        </div>
+      </div>
+      {%block products%}
+      {%if products%}
+      <h1 class="page-title">Items</h1>
+      <div class="products-hold">
+        <div class="all-products">
+          {% for product in products%}
+          <div class="product">
+            <div class="product-creation-info">
+                <a href="{% url 'view-product' product.id%}"><img src="{{product.img.url}}" class="product-img"/></a>
+            </div>
+            <p class="product-name">{{product.name}}</p>
+            <p class="product-text">{{product.desc}}</p>
+            {% comment %} <a class="delete-button" href="{% url 'delete-post' post.id %}"
+              >Delete</a
+            > {% endcomment %}
+          </div>{%endfor%}
+        </div>
+      </div>
+      {%else%}
+      <h2 class="page-title">There are no listed items.</h2>
+      {%endif%}
+      {%endblock%}
+    </div>
+  </div>
+  {%endblock%}
+</div>

@@ -13,6 +13,8 @@ def home(request):
     context = {'products':products}
     return render(request, 'home.html', context)
 
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['user', 'admin'])
 def createProduct(request):
     form = CreateProduct()
     if request.method == "POST":
@@ -24,11 +26,11 @@ def createProduct(request):
     context = {'product':form}
     return render(request, 'create-product.html', context)
 
-# @login_required(login_url='login')
-# def home(request):
-#     posts = Post.objects.all().order_by('-date_created')
-#     context = {'posts':posts}
-#     return render(request, 'home.html', context)
+
+def viewProduct(request, pk):
+    product = Product.objects.get(id=pk)
+    context = {'product':product}
+    return render(request, "view-product.html", context)
 
 # @login_required(login_url='login')
 # @allowed_users(allowed_roles=['admin'])
@@ -37,79 +39,68 @@ def createProduct(request):
 #     context = {'users': users}
 #     return render(request, 'admin.html', context)
 
-# @unauthenticated_user
-# def registerPage(request):
-#         form = CreateUser()
+@unauthenticated_user
+def registerPage(request):
+        form = CreateUser()
 
-#         if request.method == 'POST':
-#             form = CreateUser(request.POST)
-#             if form.is_valid():
-#                 user = form.save()
-#                 messages.success(request, 'Account successfully created. Please log in.')
+        if request.method == 'POST':
+            form = CreateUser(request.POST)
+            if form.is_valid():
+                user = form.save()
+                messages.success(request, 'Account successfully created. Please log in.')
 
-#                 group = Group.objects.get(name='user')
-#                 user.groups.add(group)
-#                 Profile.objects.create(user=user, name=user)
+                group = Group.objects.get(name='user')
+                user.groups.add(group)
+                Seller.objects.create(user=user, name=user)
 
-#                 return redirect('/login')
+                return redirect('/login')
 
-#         context = {'form':form}
-#         return render(request, 'register.html', context)
+        context = {'form':form}
+        return render(request, 'register.html', context)
 
-# @unauthenticated_user
-# def loginPage(request):
-#     if request.method == "POST":
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
+@unauthenticated_user
+def loginPage(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-#         user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
 
-#         if user is not None:
-#             login(request, user)
-#             return redirect('/')
-#         else:
-#             messages.info(request, 'Username or Password is incorrect')
-#     return render(request, 'login.html')
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+        else:
+            messages.info(request, 'Username or Password is incorrect')
+    return render(request, 'login.html')
 
-# @login_required(login_url='login')
-# def logoutUser(request):
-#     logout(request)
-#     return redirect('/login')
-
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['user', 'admin'])
-# def profilePage(request):
-#     user = request.user.profile
-#     posts = Post.objects.filter(profile=user).order_by('-date_created')
-#     context = {'posts':posts}
-#     return render(request, 'profile.html', context)
+@login_required(login_url='login')
+def logoutUser(request):
+    logout(request)
+    return redirect('/login')
 
 # @login_required(login_url='login')
 # @allowed_users(allowed_roles=['user', 'admin'])
-# def editProfile(request):
-#     form = ProfileForm(instance=request.user.profile)
+def profilePage(request, pk):
+    seller = Seller.objects.get(id=pk)
+    products = Product.objects.filter(seller=seller).order_by('-date_created')
+    context = {'products':products, 'seller':seller}
+    return render(request, 'profile.html', context)
 
-#     if request.method == 'POST':
-#         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/profile')
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user', 'admin'])
+def editProfile(request):
+    form = SellerProfile(instance=request.user.seller)
+
+    if request.method == 'POST':
+        form = SellerProfile(request.POST, request.FILES, instance=request.user.seller)
+        if form.is_valid():
+            form.save()
+            return redirect('/profile')
         
-#     context = {'form': form}
-#     return render(request, 'edit-profile.html', context)
+    context = {'form': form}
+    return render(request, 'edit-profile.html', context)
 
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['user', 'admin'])
-# def createPost(request):
-#     form = CreatePost()
-#     if request.method == "POST":
-#         form = CreatePost(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/')
-        
-#     context = {'post':form}
-#     return render(request, 'post.html', context)
+
 
 # @login_required(login_url='login')
 # @allowed_users(allowed_roles=['user', 'admin'])

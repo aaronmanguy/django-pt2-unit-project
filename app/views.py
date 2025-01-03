@@ -88,14 +88,14 @@ def profilePage(request, pk):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['user', 'admin'])
-def editProfile(request):
+def editProfile(request, pk):
     form = SellerProfile(instance=request.user.seller)
 
     if request.method == 'POST':
         form = SellerProfile(request.POST, request.FILES, instance=request.user.seller)
         if form.is_valid():
             form.save()
-            return redirect('/profile')
+            return redirect('/profile/'+str(pk))
         
     context = {'form': form}
     return render(request, 'edit-profile.html', context)

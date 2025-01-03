@@ -1,15 +1,16 @@
 {%extends 'nav.html'%} {%block content%}
 <div class="row">
   <div class="col-md">
-      <nav class="nav">
-      <ul class="ul">
-      <li class="li">
-        <a class="link" href="#">...</a>
-        <ul class="ul">
-          <li class="li">
+            {%if request.user.id == seller.id%}
+            <nav class="nav">
+              <ul class="ul">
+              <li class="li">
+                <a class="link" href="#">...</a>
+                <ul class="ul">
+            <li class="li">
             <a
               class="link"
-              href="/edit-profile"
+              href="{% url 'edit-profile' user.id%}"
               >Edit Profile</a
             >
           </li>
@@ -20,6 +21,7 @@
               >Logout</a
             >
           </li>
+          {%endif%}
           {% comment %} <li class="li">
             <a
               class="link"

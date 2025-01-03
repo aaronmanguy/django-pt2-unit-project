@@ -1,24 +1,23 @@
-{%extends 'nav.html'%}
-{%block content%}
+{%extends 'nav.html'%} {%block content%}
 
 <div class="row">
-    <div class="col-md">
-      <div class="card card-body">
-        <div class="profile-cluster">
-          <img class="profile-pic" src="{{seller.profile.img.url}}" />
-          <form method="POST" action="" enctype="multipart/form-data">
-            {% csrf_token %} {{form.as_p}}
-            <a class="cancel-button" href="{% url 'profile' user.id%}">Cancel</a>
-            <input
-              class="profile-submit"
-              type="submit"
-              name="update profile"
-              redirect="/profile/{{user.id}}"
-            />
-          </form>
-        </div>
+  <div class="col-md">
+    <div class="card card-body">
+      <div class="profile-cluster">
+        <img class="profile-pic" src="{{request.user.seller.img.url}}" />
+        <form method="POST" action="" enctype="multipart/form-data">
+          {% csrf_token %} {{form.as_p}}
+          <a class="cancel-button" href="{% url 'profile' user.id%}">Cancel</a>
+          <input
+            class="profile-submit"
+            type="submit"
+            name="update profile"
+            redirect="{% url 'profile' user.id%}"
+          />
+        </form>
       </div>
     </div>
   </div>
+</div>
 
 {%endblock%}

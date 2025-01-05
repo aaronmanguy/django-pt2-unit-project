@@ -13,8 +13,8 @@ def home(request):
     context = {'products':products}
     return render(request, 'home.html', context)
 
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['user', 'admin'])
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user', 'admin'])
 def createProduct(request):
     form = CreateProduct()
     if request.method == "POST":
@@ -78,8 +78,6 @@ def logoutUser(request):
     logout(request)
     return redirect('/login')
 
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['user', 'admin'])
 def profilePage(request, pk):
     seller = Seller.objects.get(id=pk)
     products = Product.objects.filter(seller=seller).order_by('-date_created')
@@ -100,17 +98,15 @@ def editProfile(request, pk):
     context = {'form': form}
     return render(request, 'edit-profile.html', context)
 
-
-
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['user', 'admin'])
-# def deletePost(request, pk):
-#     post = Post.objects.get(id=pk)
-#     if request.method == "POST":
-#         post.delete()
-#         return redirect('/profile')
-#     context = {'post': post}
-#     return render(request, 'delete-post.html', context)
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user', 'admin'])
+def deleteProduct(request, pk):
+    product = Product.objects.get(id=pk)
+    if request.method == "POST":
+        product.delete()
+        return redirect('/')
+    context = {'product': product}
+    return render(request, 'delete-product.html', context)
 
 # @login_required(login_url='login')
 # @allowed_users(allowed_roles=['admin'])

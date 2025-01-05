@@ -1,32 +1,28 @@
 {%extends 'nav.html'%} {%block content%}
 
-<h1>{{product.name}}</h1>
-
 <div class="product-details">
   <div class="product-img-hold">
     <img class="product-view-img" src="{{product.img.url}}" />
   </div>
   <div class="product-details-hold">
     <div class="product-seller-hold">
-        <img class="product-view-seller-img" src="{{product.seller.img.url}}"><span class="product-view-seller-name">{{product.seller.name}}</span>
+      <a href="{% url 'profile' product.seller.user.id%}"><img class="product-view-seller-img" src="{{product.seller.img.url}}"></a><span style="margin: 2%"><a style="text-decoration: none; color: #5c164e;;" href="{% url 'profile' product.seller.user.id%}">{{product.seller.name}}</a></span>
     </div>
     <h1 class="product-view-name">{{product.name}}</h1>
     <h2 class="product-view-desc">{{product.desc}}</h2>
+    <div class="buy-hold">
+      {%if product.id == 1%}
+      {% comment %} Buy button for product id 1 {% endcomment %}
+      <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+      <stripe-buy-button
+        buy-button-id="buy_btn_1QdDjL4Rk8KS2LkydqpU0x8g"
+        publishable-key="pk_test_51QdD5j4Rk8KS2LkyfGOlQQY4wnI4m78bT6Af4GDj3fGvdWz1I3Qr1WrbT92DShk4ufzEhYzF61PqorbYsZzj1U4i00LG6P1irP"
+      >
+      </stripe-buy-button>
+      {%else%}
+      <p>bingo</p>
+      {%endif%}
+    </div>
   </div>
 </div>
-
-<div class="buy-hold">
-  {%if product.id == 1%}
-  {% comment %} Buy button for product id 1 {% endcomment %}
-  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-  <stripe-buy-button
-    buy-button-id="buy_btn_1QdDjL4Rk8KS2LkydqpU0x8g"
-    publishable-key="pk_test_51QdD5j4Rk8KS2LkyfGOlQQY4wnI4m78bT6Af4GDj3fGvdWz1I3Qr1WrbT92DShk4ufzEhYzF61PqorbYsZzj1U4i00LG6P1irP"
-  >
-  </stripe-buy-button>
-  {%else%}
-  <p>bingo</p>
-  {%endif%}
-</div>
-
 {%endblock%}

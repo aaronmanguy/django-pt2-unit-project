@@ -1,5 +1,8 @@
 {%extends 'nav.html'%}{%block content%}
 {%load static%}
+
+<img class="home-banner" src="{% static 'images/Nerd Corner-2.png'%}">
+
 <h1 class="page-title">All Items</h1>
 
 <div class="products-hold">
@@ -10,7 +13,7 @@
         <a href="{% url 'view-product' product.id%}"><img src="{{product.img.url}}" class="product-img"/></a>
       </div>
       <p class="product-name">{{product.name}}</p>
-      <p class="product-text">{{product.desc}}</p>
+      {% comment %} <p class="product-text">{{product.desc}}</p> {% endcomment %}
     </div>
     {%endfor%}
   </div>

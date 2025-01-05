@@ -52,10 +52,10 @@
                 <a href="{% url 'view-product' product.id%}"><img src="{{product.img.url}}" class="product-img"/></a>
             </div>
             <p class="product-name">{{product.name}}</p>
-            <p class="product-text">{{product.desc}}</p>
-            {% comment %} <a class="delete-button" href="{% url 'delete-post' post.id %}"
+            {% comment %} <p class="product-text">{{product.desc}}</p> {% endcomment %}
+            <a class="delete-button" href="{% url 'delete-product' product.id %}"
               >Delete</a
-            > {% endcomment %}
+            >
           </div>{%endfor%}
         </div>
       </div>

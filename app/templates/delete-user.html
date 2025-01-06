@@ -1,0 +1,11 @@
+{% extends 'all-users.html' %} {% load static %} {% block allusers %}
+
+<p>Are you sure you want to delete user "{{user}}"</p>
+
+<form action="{% url 'delete-user' user.id %}" method="POST">
+  {% csrf_token %}
+  <a href="{% url 'all-users' %}">Cancel</a>
+  <input type="submit" name="Confirm" />
+</form>
+
+{% endblock %}

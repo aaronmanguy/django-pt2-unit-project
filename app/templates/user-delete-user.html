@@ -1,0 +1,14 @@
+{% extends 'profile.html' %} {% load static %} {% block content %}
+<div class="card-body">
+  <div class="post-cluster">
+    <h1 class="page-title">Are you sure?</h1>
+    <p>Are you sure you want to delete your account?</p>
+
+    <form action="{% url 'self-user-delete' user.id %}" method="POST">
+      {% csrf_token %}
+      <a class="cancel-button" href="{% url 'profile' %}">Cancel</a>
+      <input type="submit" name="Confirm" />
+    </form>
+  </div>
+</div>
+{% endblock %}

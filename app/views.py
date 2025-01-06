@@ -46,6 +46,7 @@ def createProduct(
     return render(request, "create-product.html", context)
 
 
+
 def viewProduct(request, pk):
     product = Product.objects.get(id=pk)
     p = stripe.Price.list().data[0]

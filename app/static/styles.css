@@ -264,7 +264,8 @@ nav li:first-child {
   object-fit: cover;
 }
 .product-view-img {
-  width: 650px;
+  width: 80%;
+  border-radius: 10%;
   padding: 4%;
 }
 .product-details {
@@ -272,20 +273,21 @@ nav li:first-child {
   justify-content: space-evenly;
   margin-top: 2%;
 }
-.product-view-name{
+.product-view-name {
   text-align: center;
   font-size: 50px;
 }
-.product-seller-hold{
+.product-seller-hold {
   display: flex;
   justify-content: center;
 }
-.product-img-hold{
+.product-img-hold {
   display: flex;
   justify-content: center;
   width: 45%;
   border-radius: 5%;
   background-color: #5c164e;
+  margin-bottom: 1%;
 }
 .delete-button {
   padding: 5px;
@@ -306,7 +308,57 @@ nav li:first-child {
 .cancel-button:hover {
   background-color: rgb(255, 64, 64);
 }
-.home-banner{
+.home-banner {
   width: 100%;
-  z-index: 1;
+  z-index: -1;
+}
+.user-profile-pic {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.product-cluster {
+  text-align: center;
+  padding: 3%;
+  border-radius: 10%;
+  background-color: #c46fac;
+}
+.product-form {
+  display: flex;
+  justify-content: center;
+}
+.edit-profile-cluster {
+  text-align: center;
+  padding: 3%;
+  border-radius: 10%;
+  background-color: #c46fac;
+}
+.edit-profile-form {
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+}
+.users-hold {
+  display: flex;
+  justify-content: center;
+}
+.all-users {
+  display: grid;
+  width: 70%;
+  justify-content: center;
+  grid-template-columns: repeat(4, 25%);
+}
+.user {
+  margin: 5%;
+  padding: 5%;
+  text-align: center;
+  border-radius: 5%;
+  background-color: #9b287b;
+}
+.login-container {
+  margin-top: 15%;
+}
+.register-container {
+  margin-top: 10%;
 }

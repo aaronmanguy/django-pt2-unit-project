@@ -21,14 +21,14 @@
               >Logout</a
             >
           </li>
-          {%endif%}
-          {% comment %} <li class="li">
+          <li class="li">
             <a
               class="link"
               href="{% url 'self-user-delete' user.id %}"
               >Delete Profile</a
             >
-          </li> {% endcomment %}
+          </li>
+          {%endif%}
         </ul>
       </ul>
       </li>
@@ -53,9 +53,11 @@
             </div>
             <p class="product-name">{{product.name}}</p>
             {% comment %} <p class="product-text">{{product.desc}}</p> {% endcomment %}
+            {%if request.user.id == seller.id%}
             <a class="delete-button" href="{% url 'delete-product' product.id %}"
               >Delete</a
             >
+            {%endif%}
           </div>{%endfor%}
         </div>
       </div>

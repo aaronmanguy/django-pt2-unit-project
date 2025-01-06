@@ -14,6 +14,7 @@ import stripe
 
 stripe.api_key = "sk_test_51QdD5bGGQnr91qVirbcauJSweVve4v1vAwWJ4Ts9sQ6izGBM51F4NzFT819sqZwnGMB9gna4cfHJHYbUR3FPa7Aq00BHOWTCzx"
 
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def home(request):
@@ -38,10 +39,11 @@ def createProduct(
                 unit_amount=form.cleaned_data["price"],
                 currency="usd",
             )
-            return redirect("/")
-        print(price)
+            products = Product.objects.all().order_by("-date_created")
+            context = {"price":price, "products":products}
+            return render(request, "home.html", context)
 
-    context = {"product": form, "price": price}
+    context = {"product": form}
 
     return render(request, "create-product.html", context)
 
@@ -64,13 +66,12 @@ def viewProduct(request, pk):
     context = {"product": product, "p": p, "payment_link": payment_link}
     return render(request, "view-product.html", context)
 
-
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['admin'])
-# def all_users(request):
-#     users = User.objects.all().order_by('-date_joined')
-#     context = {'users': users}
-#     return render(request, 'admin.html', context)
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def all_users(request):
+    users = User.objects.all().order_by('-date_joined')
+    context = {'users': users}
+    return render(request, 'all-users.html', context)
 
 
 @unauthenticated_user
@@ -116,10 +117,19 @@ def logoutUser(request):
 
 
 def profilePage(request, pk):
-    seller = Seller.objects.get(id=pk)
-    products = Product.objects.filter(seller=seller).order_by("-date_created")
-    context = {"products": products, "seller": seller}
-    return render(request, "profile.html", context)
+    try:
+        seller = Seller.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        seller_exists = False
+    else:
+        seller_exists = True
+
+    if seller_exists == False:
+        return render(request, 'no-seller.html')
+
+    products = Product.objects.filter(seller=seller).order_by('-date_created')
+    context = {'products':products, 'seller':seller}
+    return render(request, 'profile.html', context)
 
 
 @login_required(login_url="login")
@@ -148,41 +158,22 @@ def deleteProduct(request, pk):
     return render(request, "delete-product.html", context)
 
 
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['admin'])
-# def delete_user(request, pk):
-#     user = User.objects.get(id=pk)
-#     if request.method == "POST":
-#         user.delete()
-#         return redirect('/all-users')
-#     context = {'user': user}
-#     return render(request, 'delete-user.html', context)
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def delete_user(request, pk):
+    user = User.objects.get(id=pk)
+    if request.method == "POST":
+        user.delete()
+        return redirect('/all-users')
+    context = {'user': user}
+    return render(request, 'delete-user.html', context)
 
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['user', 'admin'])
-# def self_user_delete(request, pk):
-#     user = User.objects.get(id=pk)
-#     if request.method == "POST":
-#         user.delete()
-#         return redirect('/login')
-#     context = {'user': user}
-#     return render(request, 'user-delete-user.html', context)
-
-
-def create_checkout_view(View):
-    def post(self, request, *args, **kwargs):
-        YOUR_DOMAIN = "http://127.0.0.1:8000"
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    "price": "{{PRICE_ID}}",
-                    "quantity": 1,
-                },
-            ],
-            mode="payment",
-            success_url=YOUR_DOMAIN + "/success/",
-            cancel_url=YOUR_DOMAIN + "/cancel/",
-        )
-
-    return JsonResponse()
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user', 'admin'])
+def self_user_delete(request, pk):
+    user = User.objects.get(id=pk)
+    if request.method == "POST":
+        user.delete()
+        return redirect('/login')
+    context = {'user': user}
+    return render(request, 'user-delete-user.html', context)

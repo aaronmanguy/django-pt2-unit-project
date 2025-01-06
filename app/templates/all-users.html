@@ -1,0 +1,16 @@
+{%extends 'nav.html'%}{%block content%}{%load static%}
+
+<h2 class="page-title">All Users</h2>
+<div class="users-hold">
+  <div class="all-users">
+    {%block allusers%} {%for user in users%}
+    <div class="user">
+      <img src="{{user.seller.img.url}}" class="user-profile-pic" />
+      <p style="margin-bottom: 3%; color: white;">{{user.username}}</p>
+      <a class="delete-button" href="{% url 'delete-user' user.id %}">Delete</a>
+    </div>
+    {%endfor%} {%endblock%}
+  </div>
+</div>
+
+{%endblock%}

@@ -14,10 +14,11 @@ urlpatterns = [
     path("login", loginPage, name='login'),
     path("logout", logoutUser, name='logout'),
     path("profile/<int:pk>", profilePage, name='profile'),
+    path("no-seller", profilePage, name='no-seller'),
     path("edit-profile/<int:pk>", editProfile, name='edit-profile'),
-    # path("all-users", all_users, name='all-users'),
-    # path("delete-user/<int:pk>", delete_user, name='delete-user'),
-    # path("self-user-delete/<int:pk>", self_user_delete, name='self-user-delete'),
+    path("all-users", all_users, name='all-users'),
+    path("delete-user/<int:pk>", delete_user, name='delete-user'),
+    path("self-user-delete/<int:pk>", self_user_delete, name='self-user-delete'),
     path('admin/', admin.site.urls),
 ]
 

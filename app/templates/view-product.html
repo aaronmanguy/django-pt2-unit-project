@@ -21,19 +21,8 @@
     <h1 class="product-view-name">{{product.name}}</h1>
     <h2 class="product-view-desc">{{product.desc}}</h2>
     <div class="buy-hold">
-      <h1>PRODUCTS: {{p}}</h1>
-      {%if product%} {% comment %} Buy button for product id 1 {% endcomment %}
-      <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-
-      <stripe-buy-button
-        buy-button-id= 
-        publishable-key="pk_test_51QdD5j4Rk8KS2LkyfGOlQQY4wnI4m78bT6Af4GDj3fGvdWz1I3Qr1WrbT92DShk4ufzEhYzF61PqorbYsZzj1U4i00LG6P1irP"
-      >
-      </stripe-buy-button>
-      {%else%}
-      <p>bingo</p>
-      {%endif%}
+      <button><a href="{{payment_link.url}}">Link</a></button>
     </div>
   </div>
+  {%endblock%}
 </div>
-{%endblock%}

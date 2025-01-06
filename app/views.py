@@ -51,7 +51,7 @@ def createProduct(
 
 def viewProduct(request, pk):
     product = Product.objects.get(id=pk)
-    p = stripe.Price.list().data[0]
+    p = stripe.Price.list().data[pk - 1]
 
     # prod = stripe.products.retrieve(product.id)
 

@@ -6,16 +6,27 @@
   </div>
   <div class="product-details-hold">
     <div class="product-seller-hold">
-      <a href="{% url 'profile' product.seller.user.id%}"><img class="product-view-seller-img" src="{{product.seller.img.url}}"></a><span style="margin: 2%"><a style="text-decoration: none; color: #5c164e;;" href="{% url 'profile' product.seller.user.id%}">{{product.seller.name}}</a></span>
+      <a href="{% url 'profile' product.seller.user.id%}"
+        ><img
+          class="product-view-seller-img"
+          src="{{product.seller.img.url}}" /></a
+      ><span style="margin: 2%"
+        ><a
+          style="text-decoration: none; color: #5c164e"
+          href="{% url 'profile' product.seller.user.id%}"
+          >{{product.seller.name}}</a
+        ></span
+      >
     </div>
     <h1 class="product-view-name">{{product.name}}</h1>
     <h2 class="product-view-desc">{{product.desc}}</h2>
     <div class="buy-hold">
-      {%if product.id == 1%}
-      {% comment %} Buy button for product id 1 {% endcomment %}
+      <h1>PRODUCTS: {{p}}</h1>
+      {%if product%} {% comment %} Buy button for product id 1 {% endcomment %}
       <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
       <stripe-buy-button
-        buy-button-id="buy_btn_1QdDjL4Rk8KS2LkydqpU0x8g"
+        buy-button-id= 
         publishable-key="pk_test_51QdD5j4Rk8KS2LkyfGOlQQY4wnI4m78bT6Af4GDj3fGvdWz1I3Qr1WrbT92DShk4ufzEhYzF61PqorbYsZzj1U4i00LG6P1irP"
       >
       </stripe-buy-button>

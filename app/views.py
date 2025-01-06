@@ -6,31 +6,64 @@ from django.contrib import messages
 from .decorators import *
 from .models import *
 from .forms import *
+from django.views import View
+from django.http import JsonResponse
+from django.conf import settings
+import stripe
+
+
+stripe.api_key = "sk_test_51QdD5bGGQnr91qVirbcauJSweVve4v1vAwWJ4Ts9sQ6izGBM51F4NzFT819sqZwnGMB9gna4cfHJHYbUR3FPa7Aq00BHOWTCzx"
+
 
 # Create your views here.
 def home(request):
-    products = Product.objects.all().order_by('-date_created')
-    context = {'products':products}
-    return render(request, 'home.html', context)
+    products = Product.objects.all().order_by("-date_created")
+    context = {"products": products}
+    return render(request, "home.html", context)
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['user', 'admin'])
-def createProduct(request):
+
+@login_required(login_url="login")
+@allowed_users(allowed_roles=["user", "admin"])
+def createProduct(
+    request,
+):  # a comment as a book mark for the create product def so we dont pass it
     form = CreateProduct()
     if request.method == "POST":
         form = CreateProduct(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('/')
-        
-    context = {'product':form}
-    return render(request, 'create-product.html', context)
+            product = stripe.Product.create(name=form.cleaned_data["name"])
+            price = stripe.Price.create(
+                product=product.id,
+                unit_amount=form.cleaned_data["price"],
+                currency="usd",
+            )
+            return redirect("/")
+        print(price)
+
+    context = {"product": form, "price": price}
+
+    return render(request, "create-product.html", context)
 
 
 def viewProduct(request, pk):
     product = Product.objects.get(id=pk)
-    context = {'product':product}
+    p = stripe.Price.list().data[0]
+
+    # prod = stripe.products.retrieve(product.id)
+
+    payment_link = stripe.PaymentLink.create(
+        line_items=[
+            {
+                "price": p.id,
+                "quantity": 1,
+            },
+        ],
+        automatic_tax={"enabled": True},
+    )
+    context = {"product": product, "p": p, "payment_link": payment_link}
     return render(request, "view-product.html", context)
+
 
 # @login_required(login_url='login')
 # @allowed_users(allowed_roles=['admin'])
@@ -39,74 +72,81 @@ def viewProduct(request, pk):
 #     context = {'users': users}
 #     return render(request, 'admin.html', context)
 
+
 @unauthenticated_user
 def registerPage(request):
-        form = CreateUser()
+    form = CreateUser()
 
-        if request.method == 'POST':
-            form = CreateUser(request.POST)
-            if form.is_valid():
-                user = form.save()
-                messages.success(request, 'Account successfully created. Please log in.')
+    if request.method == "POST":
+        form = CreateUser(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, "Account successfully created. Please log in.")
 
-                group = Group.objects.get(name='user')
-                user.groups.add(group)
-                Seller.objects.create(user=user, name=user)
+            group = Group.objects.get(name="user")
+            user.groups.add(group)
+            Seller.objects.create(user=user, name=user)
 
-                return redirect('/login')
+            return redirect("/login")
 
-        context = {'form':form}
-        return render(request, 'register.html', context)
+    context = {"form": form}
+    return render(request, "register.html", context)
+
 
 @unauthenticated_user
 def loginPage(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('/')
+            return redirect("/")
         else:
-            messages.info(request, 'Username or Password is incorrect')
-    return render(request, 'login.html')
+            messages.info(request, "Username or Password is incorrect")
+    return render(request, "login.html")
 
-@login_required(login_url='login')
+
+@login_required(login_url="login")
 def logoutUser(request):
     logout(request)
-    return redirect('/login')
+    return redirect("/login")
+
 
 def profilePage(request, pk):
     seller = Seller.objects.get(id=pk)
-    products = Product.objects.filter(seller=seller).order_by('-date_created')
-    context = {'products':products, 'seller':seller}
-    return render(request, 'profile.html', context)
+    products = Product.objects.filter(seller=seller).order_by("-date_created")
+    context = {"products": products, "seller": seller}
+    return render(request, "profile.html", context)
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['user', 'admin'])
+
+@login_required(login_url="login")
+@allowed_users(allowed_roles=["user", "admin"])
 def editProfile(request, pk):
     form = SellerProfile(instance=request.user.seller)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = SellerProfile(request.POST, request.FILES, instance=request.user.seller)
         if form.is_valid():
             form.save()
-            return redirect('/profile/'+str(pk))
-        
-    context = {'form': form}
-    return render(request, 'edit-profile.html', context)
+            return redirect("/profile/" + str(pk))
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['user', 'admin'])
+    context = {"form": form}
+    return render(request, "edit-profile.html", context)
+
+
+@login_required(login_url="login")
+@allowed_users(allowed_roles=["user", "admin"])
 def deleteProduct(request, pk):
     product = Product.objects.get(id=pk)
     if request.method == "POST":
         product.delete()
-        return redirect('/')
-    context = {'product': product}
-    return render(request, 'delete-product.html', context)
+        return redirect("/")
+    context = {"product": product}
+    return render(request, "delete-product.html", context)
+
 
 # @login_required(login_url='login')
 # @allowed_users(allowed_roles=['admin'])
@@ -127,3 +167,22 @@ def deleteProduct(request, pk):
 #         return redirect('/login')
 #     context = {'user': user}
 #     return render(request, 'user-delete-user.html', context)
+
+
+def create_checkout_view(View):
+    def post(self, request, *args, **kwargs):
+        YOUR_DOMAIN = "http://127.0.0.1:8000"
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    "price": "{{PRICE_ID}}",
+                    "quantity": 1,
+                },
+            ],
+            mode="payment",
+            success_url=YOUR_DOMAIN + "/success/",
+            cancel_url=YOUR_DOMAIN + "/cancel/",
+        )
+
+    return JsonResponse()

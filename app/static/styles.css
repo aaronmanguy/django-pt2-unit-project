@@ -362,3 +362,21 @@ nav li:first-child {
 .register-container {
   margin-top: 10%;
 }
+.payment_button{
+  display: block;
+  margin: auto;
+  width: 15rem;
+  height: 2.5rem;
+  border-radius: 20px;
+  color: white;
+  background-color: green;
+  margin-top: 50px;
+  
+}
+.link{
+  width: 2rem;
+  text-decoration: none;
+  color: white;
+  
+
+}

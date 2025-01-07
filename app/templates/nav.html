@@ -47,7 +47,7 @@
       <li class="hideOnMobile"><a href="/all-users">All Users</a></li>
       {%endif%}
         <li class="hideOnMobile"><a href="/create-product">Create Product</a></li>
-      <li class="hideOnMobile"><a href="{% url 'profile' user.id%}"><img src="{{request.user.seller.img.url}}" class="nav-seller-img" /></a></li>
+      <li class="hideOnMobile"><a href="{% url 'profile' user.seller.id%}"><img src="{{request.user.seller.img.url}}" class="nav-seller-img" /></a></li>
       {%else%}
       <li class="hideOnMobile"><a href="/login">Login</a></li>
       {%endif%}

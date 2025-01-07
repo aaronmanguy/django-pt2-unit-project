@@ -6,7 +6,7 @@
 
     <form action="{% url 'self-user-delete' user.id %}" method="POST">
       {% csrf_token %}
-      <a class="cancel-button" href="{% url 'profile' %}">Cancel</a>
+      <a class="cancel-button" href="{% url 'profile' user.id%}">Cancel</a>
       <input type="submit" name="Confirm" />
     </form>
   </div>

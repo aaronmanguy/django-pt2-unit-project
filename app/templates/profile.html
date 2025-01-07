@@ -1,7 +1,7 @@
 {%extends 'nav.html'%} {%block content%}
 <div class="row">
   <div class="col-md">
-            {%if request.user.id == seller.id%}
+            {%if user_id == seller.id or request.user.id == seller.id%}
             <nav class="nav">
               <ul class="ul">
               <li class="li">

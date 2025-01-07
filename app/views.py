@@ -25,9 +25,7 @@ def home(request):
 
 @login_required(login_url="login")
 @allowed_users(allowed_roles=["user", "admin"])
-def createProduct(
-    request,
-):  # a comment as a book mark for the create product def so we dont pass it
+def createProduct(request):
     form = CreateProduct()
     if request.method == "POST":
         form = CreateProduct(request.POST, request.FILES)
@@ -48,22 +46,25 @@ def createProduct(
     return render(request, "create-product.html", context)
 
 
+
 def viewProduct(request, pk):
     product = Product.objects.get(id=pk)
-    p = stripe.Price.list().data[0]
+    product_seller_id = product.seller.user.id 
+    print(product_seller_id)
+    p = stripe.Price.list().data[pk]
 
     # prod = stripe.products.retrieve(product.id)
 
-    payment_link = stripe.PaymentLink.create(
-        line_items=[
-            {
-                "price": p.id,
-                "quantity": 1,
-            },
-        ],
-        automatic_tax={"enabled": True},
-    )
-    context = {"product": product, "p": p, "payment_link": payment_link}
+    #payment_link = stripe.PaymentLink.create(
+       #line_items=[
+       #     {
+       #         "price": p.id,
+       #         "quantity": 1,
+       #     },
+       # ],
+       # automatic_tax={"enabled": True},
+    #)
+    context = {"product": product, "p": p,'product_seller_id':product_seller_id}
     return render(request, "view-product.html", context)
 
 @login_required(login_url='login')

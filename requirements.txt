@@ -1,32 +1,23 @@
-altgraph @ file:///AppleInternal/Library/BuildRoots/bd680bd8-563b-11ef-bf16-8a553ba56670/Library/Caches/com.apple.xbs/Sources/python3/altgraph-0.17.2-py2.py3-none-any.whl
 asgiref==3.8.1
-async-timeout==5.0.0
-black==24.8.0
-certifi==2024.8.30
-charset-normalizer==3.4.0
-click==8.1.7
-Django==4.2.16
-exceptiongroup==1.2.2
-future @ file:///AppleInternal/Library/BuildRoots/bd680bd8-563b-11ef-bf16-8a553ba56670/Library/Caches/com.apple.xbs/Sources/python3/future-0.18.2-py3-none-any.whl
+black==25.1.0
+certifi==2025.1.31
+charset-normalizer==3.4.1
+click==8.1.8
+Django==5.2
 gunicorn==23.0.0
 idna==3.10
-iniconfig==2.0.0
-macholib @ file:///AppleInternal/Library/BuildRoots/bd680bd8-563b-11ef-bf16-8a553ba56670/Library/Caches/com.apple.xbs/Sources/python3/macholib-1.15.2-py2.py3-none-any.whl
-mypy==1.11.1
+iniconfig==2.1.0
+mypy==1.15.0
 mypy-extensions==1.0.0
-packaging==24.1
+packaging==24.2
 pathspec==0.12.1
-pillow==11.0.0
-platformdirs==4.2.2
+pillow==11.1.0
+platformdirs==4.3.7
 pluggy==1.5.0
-pytest==8.3.2
-redis==5.2.0
+pytest==8.3.5
 requests==2.32.3
-six @ file:///AppleInternal/Library/BuildRoots/bd680bd8-563b-11ef-bf16-8a553ba56670/Library/Caches/com.apple.xbs/Sources/python3/six-1.15.0-py2.py3-none-any.whl
-spotipy==2.24.0
-sqlparse==0.5.1
-stripe==11.4.1
-tomli==2.0.1
-typing_extensions==4.12.2
-urllib3==2.2.3
+sqlparse==0.5.3
+stripe==12.0.0
+typing_extensions==4.13.0
+urllib3==2.3.0
 whitenoise==6.9.0

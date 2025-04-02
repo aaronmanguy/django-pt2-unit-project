@@ -16,7 +16,8 @@ SECRET_KEY = 'django-insecure-fg^#q#@+t0l6%*)3k9lgk&fuisyfmf-v83kviqq*!v)mc)k^yj
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'nerd-corner-6485a0050f4d.herokuapp.com'
+    'nerd-corner-6485a0050f4d.herokuapp.com',
+    '127.0.0.1'
 ]
 
 LOGIN_URL = "/login"

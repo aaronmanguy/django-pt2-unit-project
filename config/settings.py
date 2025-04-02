@@ -15,7 +15,9 @@ SECRET_KEY = 'django-insecure-fg^#q#@+t0l6%*)3k9lgk&fuisyfmf-v83kviqq*!v)mc)k^yj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'nerd-corner-6485a0050f4d.herokuapp.com'
+]
 
 LOGIN_URL = "/login"
 
